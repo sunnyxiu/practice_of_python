@@ -1,10 +1,13 @@
 from pathlib import Path
 from PyPDF2 import PdfWriter, PdfReader
+import os
 
 class PdfFileSplitter:
     def __init__(self, path_string):
         self.path = Path.cwd() / path_string
         self.pdf_reader = PdfReader(self.path)
+        self.writer1 = None
+        self.writer2 = None
 
     def split(self, breakpoint):
         self.writer1 = PdfWriter()
@@ -15,12 +18,13 @@ class PdfFileSplitter:
             self.writer2.add_page(page)
 
     def write(self, filename):
-        self.path1 = Path(f"{Path.cwd()} / {filename}_1.pdf")
-        self.path2 = Path(f"{Path.cwd()} / {filename}_2.pdf")
+        self.path1 = Path(f"{Path.cwd()}/{filename}_1.pdf")
+        self.path2 = Path(f"{Path.cwd()}/{filename}_2.pdf")
         with self.path1.open(mode="wb") as output_pdf1:
-            self.writer.write(output_pdf1)
+            self.writer1.write(output_pdf1)
         with self.path2.open(mode="wb") as output_pdf2:
-            self.writer.write(output_pdf2)
+            self.writer2.write(output_pdf2)
+
 
     
         
